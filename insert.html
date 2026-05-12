@@ -1,62 +1,29 @@
-# Play a Single Insert.gb File with jsGB
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Insert.gb</title>
-    <script src="https://cdn.jsdelivr.net/gh/JSGB/jsGB/jsGB.js"></script>
-    <script>window.onload = function(){nes_load_url("gb-canvas", "insert.gb");}</script>
-    <style>
-        body { text-align: center; }
-        canvas { border: 1px solid black; }
-    </style>
-</head>
-<body>
-    <h1>Play Your Game</h1>
-    <canvas id="gbCanvas" width="160" height="144"></canvas>
-    <input type="file" id="fileInput" accept=".gb" />
-    <script>
-        const canvas = document.getElementById('gbCanvas');
-        const gb = new jsGB(canvas);
-        const fileInput = document.getElementById('fileInput');
-
-        fileInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                gb.load(e.target.result);
-                gb.start();
-            };
-            reader.readAsArrayBuffer(file);
-        });
-
-        document.addEventListener('keydown', (event) => {
-            switch (event.key) {
-                case 'ArrowUp': gb.press('up'); break;
-                case 'ArrowDown': gb.press('down'); break;
-                case 'ArrowLeft': gb.press('left'); break;
-                case 'ArrowRight': gb.press('right'); break;
-                case 'a': gb.press('a'); break;
-                case 's': gb.press('b'); break;
-                case 'Tab': gb.press('select'); break;
-                case 'Enter': gb.press('start'); break;
+<html>
+    <head>
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0;
             }
-        });
-
-        document.addEventListener('keyup', (event) => {
-            switch (event.key) {
-                case 'ArrowUp': gb.release('up'); break;
-                case 'ArrowDown': gb.release('down'); break;
-                case 'ArrowLeft': gb.release('left'); break;
-                case 'ArrowRight': gb.release('right'); break;
-                case 'a': gb.release('a'); break;
-                case 's': gb.release('b'); break;
-                case 'Tab': gb.release('select'); break;
-                case 'Enter': gb.release('start'); break;
-            }
-        });
-    </script>
-</body>
+        </style>
+        <link rel="shortcut icon" type="image/jpeg" href="favicon.jpg"/>
+        <title>Pokemon Red</title>
+        <script> // So it can escape certain filters, like GoGuardian
+        window.onbeforeunload = function() {
+            return "Are you sure you want to reload?";
+        };
+        </script>
+    </head>
+    <body>
+        <div style="width:100%;height:100%;max-width:100%">
+            <div id="game"></div>
+        </div>
+        <script>
+            EJS_player = "#game";
+            EJS_core = "gb";
+            EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+            EJS_gameUrl = "insert.gb"
+        </script>
+        <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+    </body>
 </html>
